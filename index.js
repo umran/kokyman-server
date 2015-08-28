@@ -12,7 +12,7 @@ var tlsOptions = {
 	ciphers: 'ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
 	dhparam: fs.readFileSync('./certs/dhparam.pem'),
 	honorCipherOrder: true,
-	secureOptions: 'SSL_OP_NO_SSLv3|SSL_OP_NO_SSLv2'
+	secureOptions: constants.SSL_OP_NO_SSLv3
 }
 
 var server = tls.createServer(tlsOptions, function (socket) {
