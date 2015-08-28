@@ -6,6 +6,5 @@
     "start": "node index"
   },
   "dependencies": {
-    "proxying-agent":"^0.1.7"
   }
 }
