@@ -1,4 +1,4 @@
-//Libraries
+//libraries
 var constants = require('constants'),
     tls = require('tls'),
     fs = require('fs'),
@@ -6,7 +6,7 @@ var constants = require('constants'),
     trans = require('./transparent').open;
 
 //static variables
-var HEADERS = "Proxy-agent: protonet-proxy/0.0.1\r\n";
+var HEADERS = "Proxy-agent: kokyman/0.0.1\r\n";
 var tlsOptions = {
 	key: fs.readFileSync('./certs/thecoffeehouse.xyz.key'),
 	cert: fs.readFileSync('./certs/thecoffeehouse.xyz.bundle.crt'),
