@@ -4,7 +4,7 @@ var constants = require('constants'),
     fs = require('fs'),
     events = require('events'),
     trans = require('./transparent').open;
-    
+
 //static variables
 var HEADERS = "Proxy-agent: protonet-proxy/0.0.1\r\n";
 var tlsOptions = {
