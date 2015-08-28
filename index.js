@@ -10,10 +10,10 @@ var HEADERS = "Proxy-agent: protonet-proxy/0.0.1\r\n";
 var tlsOptions = {
 	key: fs.readFileSync('./certs/thecoffeehouse.xyz.key'),
 	cert: fs.readFileSync('./certs/thecoffeehouse.xyz.bundle.crt'),
-	ciphers: 'ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:RSA+AESGCM:RSA+AES:RSA+3DES:!aNULL:!MD5:!DSS',
+	ciphers: 'ECDH+AESGCM:DH+AESGCM:ECDH+AES256:DH+AES256:ECDH+AES128:DH+AES:ECDH+3DES:DH+3DES:!aNULL:!MD5:!DSS',
 	dhparam: fs.readFileSync('./certs/dhparam.pem'),
 	honorCipherOrder: true,
-	secureOptions: constants.SSL_OP_NO_SSLv3
+	secureOptions: constants.SSL_OP_NO_SSLv3 | constants.SSL_OP_NO_SSLv2
 }
 
 var server = tls.createServer(tlsOptions, function (socket) {
