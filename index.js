@@ -1,5 +1,6 @@
 //Libraries
-var tls = require('tls'),
+var constants = require('constants'),
+    tls = require('tls'),
     fs = require('fs'),
     events = require('events'),
     trans = require('./transparent').open;
