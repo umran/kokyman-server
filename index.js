@@ -98,10 +98,10 @@ var handler = function(data) {
 				});
 
 				socket.addListener('error', function(){
-					killswitch.emit('disconnect');
+					killSwitch.emit('disconnect');
 				});
 				remote.addListener('error', function(){
-					killswitch.emit('disconnect');
+					killSwitch.emit('disconnect');
 				});
 			});
 		}
