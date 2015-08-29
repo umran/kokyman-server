@@ -23,12 +23,10 @@ var server = tls.createServer(tlsOptions, function (socket) {
 	send_response = function(numeric, text, close) {
 	console.log('Sending HTTP ' + numeric + ' ' + text + ' response');
 
-	try {
-		socket.write(http_version + ' ' + numeric + ' ' + text + "\r\n");
-		socket.write(HEADERS + "\r\n");
-	}catch(ex) {
-		console.log('Error occurred while sending HTTP response');
-	}
+
+	socket.write(http_version + ' ' + numeric + ' ' + text + "\r\n");
+	socket.write(HEADERS + "\r\n");
+	
 
 	if(close) {
 		console.log('Disconnecting client');
@@ -68,6 +66,7 @@ var handler = function(data) {
 					return;
 				}
 				
+				send_response(200, 'Connection Established');
 				console.log('Connected to upstream service, initiating tunnel pumping');
 				
 				//define a kill switch for this tunnel
@@ -75,28 +74,14 @@ var handler = function(data) {
 				var killSwitch = new events.EventEmitter();
 				
 				killSwitch.once('disconnect', function() {
-					console.log('Disconnecting tunnel');
-					try { 
-						socket.end(); 
-					}catch(ex) {}
-					try { 
-						remote.end(); 
-					}catch(ex) {}
+					console.log('Disconnecting tunnel'); 
+					socket.end(); 
+					remote.end();
 				});
-
-				var closeBoth = function(message){
-					console.log(message);
-					killSwitch.emit('disconnect');
-				}
 
 				var tunnel = function(other) {
 					return function(data) {
-						try { 
-							other.write(data); 
-						}catch(ex) {
-							console.log('Error during socket write');
-							closeBoth();
-						}
+						other.write(data); 
 					}
 				}
 
@@ -104,20 +89,18 @@ var handler = function(data) {
 				remote.addListener('data', tunnel(socket));
 
 				socket.addListener('close', function(){
-					closeBoth('client closed the connection');
+					remote.end();
 				});
 				remote.addListener('close', function(){
-					closeBoth('remote server closed the connection');
+					socket.end();
 				});
 
 				socket.addListener('error', function(){
-					closeBoth('connection closed due to error emitted on the client socket');
+					killswitch.emit('disconnect');
 				});
 				remote.addListener('error', function(){
-					closeBoth('connection closed due to error emitted on the remote socket');
+					killswitch.emit('disconnect');
 				});
-
-				send_response(200, 'Connection Established');
 			});
 		}
 	}
