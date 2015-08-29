@@ -103,11 +103,19 @@ var handler = function(data) {
 				socket.addListener('data', tunnel(remote));
 				remote.addListener('data', tunnel(socket));
 
-				socket.addListener('close', closeBoth('client closed the connection'));
-				remote.addListener('close', closeBoth('remote server closed the connection'));
+				socket.addListener('close', function(){
+					closeBoth('client closed the connection');
+				});
+				remote.addListener('close', function(){
+					closeBoth('remote server closed the connection');
+				});
 
-				socket.addListener('error', closeBoth('connection closed due to error emitted on the client socket'));
-				remote.addListener('error', closeBoth('connection closed due to error emitted on the remote socket'));
+				socket.addListener('error', function(){
+					closeBoth('connection closed due to error emitted on the client socket');
+				});
+				remote.addListener('error', function(){
+					closeBoth('connection closed due to error emitted on the remote socket');
+				});
 
 				send_response(200, 'Connection Established');
 			});
