@@ -117,8 +117,8 @@ var handler = function(data) {
 });
 
 //initialize tunnelling proxy
-server.listen(443);
-console.log('Secure proxy server running at http://0.0.0.0:443/');
+server.listen(3080);
+console.log('Secure proxy server running at http://0.0.0.0:3080/');
 
 //Finally set up exception handling
 process.on('uncaughtException',function(error){
