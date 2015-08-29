@@ -74,7 +74,7 @@ var handler = function(data) {
 				var killSwitch = new events.EventEmitter();
 				
 				killSwitch.once('disconnect', function() {
-					console.log('Disconnecting tunnel'); 
+					console.log('An error was encountered, forcing tunnel to close'); 
 					socket.end(); 
 					remote.end();
 				});
@@ -89,9 +89,11 @@ var handler = function(data) {
 				remote.addListener('data', tunnel(socket));
 
 				socket.addListener('close', function(){
+					console.log('client socket closed connection, all sockets will now close or have been closed');
 					remote.end();
 				});
 				remote.addListener('close', function(){
+					console.log('remote socket closed connection, all sockets will now close or have been closed');
 					socket.end();
 				});
 
