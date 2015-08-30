@@ -51,7 +51,6 @@ var handler = function(data) {
 		console.log('Client requested a tunnel to ' + target + ' port ' + port);
 
 		http_version = captures[3];
-		console.log('Remote port is ' + port);
 
 		if (!port) { return send_response(401, 'Unknown Proxy Target', true); }
 
