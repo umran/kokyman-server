@@ -23,10 +23,7 @@ var server = tls.createServer(tlsOptions, function (socket) {
 	send_response = function(numeric, text, close) {
 	console.log('Sending HTTP ' + numeric + ' ' + text + ' response');
 
-
-	socket.write(http_version + ' ' + numeric + ' ' + text + "\r\n");
-	socket.write(HEADERS + "\r\n");
-	
+	socket.write(http_version + ' ' + numeric + ' ' + text + "\r\n" + HEADERS + "\r\n");
 
 	if(close) {
 		console.log('Disconnecting client');
@@ -38,7 +35,7 @@ var server = tls.createServer(tlsOptions, function (socket) {
 var handler = function(data) {
 	buffer += data.toString();
 
-	if (buffer.indexOf("\r\n\r\n") > 0 || buffer.indexOf("\n\n") > 0) {
+	if (buffer.indexOf("\r\n\r\n") > -1 || buffer.indexOf("\n\n") > -1) {
 		socket.removeListener('data', handler);
 
 		var captures = buffer.match(/^CONNECT ([^:]+):([0-9]+) (HTTP\/1\.[01])/);
