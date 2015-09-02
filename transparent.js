@@ -6,7 +6,7 @@ exports.open = function(host, port, trash, callback) {
 	var proxy = new net.Socket();
 
 	var error_callback = function() {
-		callback('connection attempt to remote host failed');
+		return callback('connection attempt to remote host failed');
 	}
 
 	proxy.addListener('error', error_callback);
