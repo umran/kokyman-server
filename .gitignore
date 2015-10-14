@@ -1,3 +1,5 @@
 node_modules/*
 certs/*
 npm-debug.log
+
+*.zip
